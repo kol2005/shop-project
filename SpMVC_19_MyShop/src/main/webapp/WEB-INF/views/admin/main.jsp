@@ -14,7 +14,7 @@
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 		<ul class="navbar-nav">
 			<li class="navbar-item"><a class="nav-link" href="${rootPath}/">홈</a></li>
-			<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/product">상품정보</a></li>
+			<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/product/">상품정보</a></li>
 			<li class="navbar-item"><a class="nav-link" href="#">품목정보</a></li>
 			<li class="navbar-item"><a class="nav-link" href="#">거래처정보</a></li>
 		</ul>
