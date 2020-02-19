@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +52,8 @@ public class ProductVO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long p_id;
+	@Column(name="p_id")
+	long id;
 	
 	// 입력값이 공백일 경우 error
 	@NotBlank(message = "* 상품코드는 공백이 되면 아니되옵니다")
@@ -62,7 +64,7 @@ public class ProductVO {
 	// Min(), Max()
 	//@Max(13)
 	@Size(max = 13, message = "* 상품코드는 13자리 이하만 가능하옵니다")
-	@Column(name="p_code",length = 13)
+	@Column(name="p_code",length = 13,unique = true,nullable = false)// 길이는 13자리,UNIQUE,NOT NULL
 	private String p_code;
 	
 	// @phoneNumber() : 전화번호 형식 062-111-1234
@@ -73,12 +75,13 @@ public class ProductVO {
 	@Column(name="p_name")
 	private String p_name;
 	
+	@Size(min=5,max=5,message="* 품목 코드를 확인하세요")
 	@Column(name="p_bcode",length = 5)
 	private String p_bcode;
 
+	@Size(min=5,max=5,message="* 거래처 코드를 확인하세요")
 	@Column(name="p_dcode",length = 5)
 	private String p_dcode;
-	
 	
 	@Column(name="p_iprice")
 	private int p_iprice;
