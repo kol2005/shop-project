@@ -61,13 +61,27 @@ public class DeptController {
 		return "redirect:/admin/dept";
 	}
 	
-	private void modelMapping(Model model) {
-
-		List<DeptVO> deptList = dService.selectAll();
+	@RequestMapping(value= {"/search/{search}","/search/","/search"},method=RequestMethod.GET)
+	public String search(@PathVariable(name="search",required = false)String search,Model model) {
+		//return dService.search("D0001");
+		this.modelMapping(model,search);
+		return "admin/dept-list";
+	}
+	
+	private void modelMapping(Model model,String search) {
+		List<DeptVO> deptList = null;
+		if(search == null) {
+			deptList = dService.selectAll();	
+		}else {
+			deptList = dService.findByDName(search);
+		}
 		
 		model.addAttribute("DEPT_LIST",deptList);
-		
 		model.addAttribute("BODY","DEPT");
+	}
+	
+	private void modelMapping(Model model) {
+		this.modelMapping(model,null);
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)

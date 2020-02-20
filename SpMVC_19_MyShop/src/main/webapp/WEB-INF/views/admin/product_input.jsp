@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <script>
 $(function(){
 	
@@ -22,7 +23,7 @@ $(function(){
 		if(e.keyCode == KEY_F9){
 			
 			let search = $(this).val()
-			let dept_url = "${rootPath}/admin/dept/list"
+			let dept_url = "${rootPath}/admin/dept/search/" + search
 			let win_style = "toolbar=no,"
 				win_style += "scrollbar=yes,"
 				win_style += "resizeable=no,"
@@ -38,7 +39,7 @@ $(function(){
 })
 </script>
 		<form:form action="${rootPath}/admin/product/detail" modelAttribute="productVO">
-			<div class="form-group row">
+			<div class="form-group">
 				<form:select path="p_bcode" class="custom-select-sm">
 					<form:option value="0">품목을 선택하세요</form:option>
 					<form:option value="B0001">공산품</form:option>
@@ -48,19 +49,19 @@ $(function(){
 				<form:errors path="p_bcode" class="in-errors"/>
 			</div>
 			
-			<div class="form-group row">
+			<div class="form-group">
 				<div class="container-fluid row">
 					<form:input path="p_dcode" class="custom-select-sm col-6"/>
 					<span id="d_name" class="col-5"></span>
 					<form:errors path="p_dcode" class="in-errors col-6"/>
 				</div>
 			</div>
-			
+			<div class="form-group">
 			<div class="container-fluid row">
 			<form:errors path="p_bcode" class="in-errors col-6"/>
 			<form:errors path="p_dcode" class="in-errors col-6"/>
 			</div>
-			
+			</div>
 			<div class="form-group">
 				<form:input path="p_code" class="form-control" placeholder="상품코드"/>
 				<form:errors path="p_code" class="in-errors"/>

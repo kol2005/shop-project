@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <style>
 .in-errors{
 color: red;
@@ -27,10 +28,11 @@ overflow: auto;
 
 .p_name{
 display:inline-block;
-width:30px;
+width:150px;
 padding:0 5px;
 overflow: hidden;
 text-overflow: ellipsis;
+white-space: nowrap;
 }
 
 </style>
@@ -47,6 +49,7 @@ text-overflow: ellipsis;
 			<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/product/">상품정보</a></li>
 			<li class="navbar-item"><a class="nav-link" href="#">품목정보</a></li>
 			<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/dept/">거래처정보</a></li>
+			<li class="navbar-item"><a class="nav-link" href="${rootPath}/user/product/list/">상품리스트</a></li>
 			
 			<li class="navbar-item">
 			<form:form action="${rootPath}/logout" name="logout_form">
@@ -65,6 +68,12 @@ text-overflow: ellipsis;
 			</c:when>
 			<c:when test="${BODY == 'DEPT'}">
 				<%@ include file="/WEB-INF/views/admin/dept.jsp" %>
+			</c:when>
+			<c:when test="${BODY == 'LIST'}">
+				<%@ include file="/WEB-INF/views/users/user_product_list.jsp" %>
+			</c:when>
+			<c:when test="${BODY == 'DETAIL'}">
+				<%@ include file="/WEB-INF/views/users/user_product_detail.jsp" %>
 			</c:when>
 		</c:choose>
 	</section>
