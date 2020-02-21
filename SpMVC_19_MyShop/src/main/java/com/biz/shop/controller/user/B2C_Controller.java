@@ -31,7 +31,7 @@ public class B2C_Controller {
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(@ModelAttribute("productVO")ProductVO productVO, Model model) {
 		List<ProductVO> proList = proService.selectAll();
-		model.addAttribute("PRO_LIST",proList);
+		model.addAttribute("B2C_LIST",proList);
 		model.addAttribute("BODY","LIST");
 		
 		return "admin/main";
@@ -44,7 +44,7 @@ public class B2C_Controller {
 		
 		productVO = proService.findById(lid);
 		
-		model.addAttribute("proUserVO",productVO);
+		model.addAttribute("pVO",productVO);
 		model.addAttribute("BODY","DETAIL");
 		
 		return "admin/main";
