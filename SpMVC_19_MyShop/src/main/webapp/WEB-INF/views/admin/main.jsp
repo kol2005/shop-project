@@ -75,6 +75,12 @@ white-space: nowrap;
 			<c:when test="${BODY == 'DETAIL'}">
 				<%@ include file="/WEB-INF/views/users/user_product_detail.jsp" %>
 			</c:when>
+			
+			<c:otherwise>
+				<h3>카트 상품 : ${COUNT_CART}</h3>
+				<h3>배송중 상품 : ${COUNT_DELIV}</h3>
+			</c:otherwise>
+			
 		</c:choose>
 	</section>
 

@@ -12,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.biz.shop.domain.CustomUserDetail;
 
+import lombok.extern.slf4j.Slf4j;
+
 /*
  * supports() method가 true를 return 하면
  * 정상로그인된 사용자 정보가 token 형태로
@@ -19,6 +21,7 @@ import com.biz.shop.domain.CustomUserDetail;
  * 
  * authenticate에서 필요한 사용자 정보를 만들거나 가공할수 있다
  */
+@Slf4j
 public class CustomAuthProvider implements AuthenticationProvider {
 
 	@Override
@@ -26,6 +29,12 @@ public class CustomAuthProvider implements AuthenticationProvider {
 		
 		String username = (String) authentication.getPrincipal(); //username 추출
 		String password = (String) authentication.getCredentials(); // 비밀번호 추출
+		log.debug("USERNAME  : {}",username);
+		
+		if (username == null || username.isEmpty()) {
+			log.debug("LOGIN FAIL");
+			return null;
+		}
 		
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
