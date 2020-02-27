@@ -21,7 +21,7 @@
 		log.debug("메시지")라고 설정을 하면 이 메세지는
 		콘솔에 보이지 않는다
 	 -->
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="myConsole"/>
 	</root>
 	
