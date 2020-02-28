@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.CommentVO;
 import com.biz.bbs.service.BBsService;
+import com.biz.bbs.service.CommentService;
 import com.biz.bbs.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,10 @@ public class BBsController {
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private CommentService cmtService;
+	
 	/*
 	 * 게시판 목록 전체를 보기 위한 method이고
 	 * DB에서 tbl_bbs 테이블 전체를 SELECT 한 결과를
@@ -103,6 +109,9 @@ public class BBsController {
 	
 	@RequestMapping(value="/detail",method=RequestMethod.GET)
 	public String detail(@RequestParam("b_id")String b_id,Model model) {
+		List<CommentVO> cmtList = cmtService.findByBId(Long.valueOf(b_id));
+		model.addAttribute("CMT_LIST",cmtList);
+		
 		BBsVO bbsVO = bbsService.findById(Long.valueOf(b_id));
 		model.addAttribute("BBS",bbsVO);
 		return "bbs_view";
