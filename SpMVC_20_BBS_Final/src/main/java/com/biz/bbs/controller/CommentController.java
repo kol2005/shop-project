@@ -76,5 +76,11 @@ public class CommentController {
 		model.addAttribute("b_id",b_id);
 		return "redirect:/comment/list";
 	}
+	
+	@RequestMapping(value="/repl",method=RequestMethod.GET)
+	public String repl(CommentVO cmtVO, Model model) {
+		model.addAttribute("CMT",cmtVO);
+		return "comment_write";
+	}
 
 }
