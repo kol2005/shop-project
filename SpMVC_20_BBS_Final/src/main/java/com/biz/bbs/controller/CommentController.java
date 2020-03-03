@@ -3,6 +3,7 @@ package com.biz.bbs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,11 @@ import lombok.RequiredArgsConstructor;
  */
 @RequestMapping(value="/comment")
 @Controller
-@RequiredArgsConstructor
 public class CommentController {
 	
 	@Autowired
-	private final CommentService cmtService;
+	@Qualifier("cmtV2")
+	private CommentService cmtService;
 	
 	/*
 	 * 게시판의 id값을 매개변수로 받아서

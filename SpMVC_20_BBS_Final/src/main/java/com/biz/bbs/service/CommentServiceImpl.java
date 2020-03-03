@@ -12,12 +12,15 @@ import com.biz.bbs.repository.CommentDao;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
-@RequiredArgsConstructor
+@Service("cmtV1")
 public class CommentServiceImpl implements CommentService{
 
 	protected final CommentDao cmtDao;
-	
+	public CommentServiceImpl(CommentDao cmtDao) {
+		super();
+		this.cmtDao = cmtDao;
+	}
+
 	@Override
 	public List<CommentVO> selectAll() {
 		return cmtDao.selectAll();

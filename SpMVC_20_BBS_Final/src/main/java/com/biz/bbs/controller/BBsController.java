@@ -32,6 +32,7 @@ public class BBsController {
 	private FileService fileService;
 	
 	@Autowired
+	@Qualifier("cmtV2")
 	private CommentService cmtService;
 	
 	/*
