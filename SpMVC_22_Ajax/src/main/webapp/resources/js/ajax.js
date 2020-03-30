@@ -68,13 +68,15 @@ $(function(){
 		//alert($(this).text())
 		
 		/*
-		 * 톰캣은 기본적으로 POST,PUT
+		 * 톰캣은 기본적으로 POST,GET method는 사용할수 있는데
+		 * PUT,DELETE 등의 RestFull Method는 사용을 할 수 없도록
+		 * 기본값이 설정되어 있다
 		 */
 		$.ajax({
 			url:rootPath+"/ajax/put",
 			method:"PUT",
-			data : {msg:$(this).text()},
-			success:function(result){
+			data : {msg : $(this).text()},
+			success : function(result){
 				alert(result)
 			},
 			error:function(){
