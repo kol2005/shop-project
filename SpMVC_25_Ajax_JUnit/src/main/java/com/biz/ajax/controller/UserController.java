@@ -40,7 +40,9 @@ public class UserController {
 	 * 데이터를 있는 그대로 전송하는 역할을 수행한다.
 	 */
 	@ResponseBody
-	@RequestMapping(value = "sendUserId", method = RequestMethod.POST)
+	@RequestMapping(value = "sendUserId",
+	method = RequestMethod.POST,
+	produces = "application/json;charset=UTF-8")
 	public Map<String,Object> sendUserId(UserVO userVO) {
 		
 		Map<String, Object> msg = new HashMap<String, Object>();
