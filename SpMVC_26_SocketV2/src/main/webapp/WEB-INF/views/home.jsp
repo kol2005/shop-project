@@ -10,6 +10,12 @@
 <title>나의 홈페이지</title>
 
 <style>
+#message_list{
+border:1px solid red;
+height: 25vh;
+overflow: auto;
+
+}
 .from, .to{
 padding: 5px;
 }
@@ -28,7 +34,8 @@ font-weight: bold;
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <script>
-	var socket = new SockJS('http://localhost:8080/socket/chat');
+	//var socket = new SockJS('http://localhost:8080/socket/chat');
+	var socket = new SockJS('http://192.168.4.12:8080/socket/chat');
 	// 소켓 서버에 접속시작
 	socket.onopen = function() {
 		
@@ -37,7 +44,7 @@ font-weight: bold;
 		if(userName && userName != ""){
 			socket.send("userName:" + userName)// userName:홍길동
 		}
-		
+		socket.send("getUserList:" + userName)
 	};
 
 	// 서버로부터 수신되는 이벤트
@@ -46,6 +53,7 @@ font-weight: bold;
 		//alert(e.data)
 		// 문자열형으로 수신된 json 문자열을 json 객체로 변환
 		let mJson = JSON.parse(e.data)
+		
 		
 		// 서버로부터 전달받은 데이터에 msg라는 key가 있느냐
 		// key가 있으면 key가 userName이냐?
@@ -56,18 +64,42 @@ font-weight: bold;
 			return false;
 		}
 		
+		
+		//alert(mJson.msg)
 		if(mJson.msg && mJson.msg == 'userList'){
+			
+			//alert(mJson.userList)
 			let userList = JSON.parse(mJson.userList)
 			
-			// 동적 tag를 만드는 jquery 코드
-			let options = $("<option/>",{value:"all",text:"전체"})
+			$("#toList").empty()
+			$("#toList").append(
+					
+					// 동적 tag를 만드는 jquery 코드
+					$("<option/>",
+							{value:"all",text:"전체"}
+					))
 			
-			for(let i = 0 ; i < userList.length ; i ++) {
-				options.append($("<option/>",
-						{value:userList[i].userName,
-						text:userList[i].userName})
-			)}
-		}
+			// js코드 내장 객체 method
+			// userList 객체 그룹중에서 각 요소의 키값만 추출하여
+			// 배열로 만들어 달라
+			let userListKeys = Object.keys(userList)
+			for(let i = 0 ; i< userListKeys.length ; i++){
+				//console.log(userListKeys[i])
+				console.log("사용자이름 :",userList[userListKeys[i]].userName)
+				
+				// 동적 tag를 만드는 jquery 코드
+				$("#toList").append(
+						$("<option/>",
+								{value:userListKeys[i],
+								text:userList[userListKeys[i]].userName}
+						))
+					
+			}
+			return false;
+		}	
+			
+			
+			
 		
 		let html = "<div class='from text-right'>"
 		html += "<span class='userName'>"
@@ -77,6 +109,8 @@ font-weight: bold;
 		html += "</div>"
 		
 		$("#message_list").append(html)
+		$("#message_list").scrollTop($("#message_list").prop('scrollHeight'))
+		
 	};
 
 	// 소켓 서버와 접속 종료
@@ -97,6 +131,10 @@ $(function(){
 	})
 	
 	$(document).on("click","#btn_send",function(){
+		
+		let toUserId = $("#toList").val()
+		let toUserName = $("#toList option:checked").text()
+		
 		let userName = $("#userName").val()
 		if(userName == ""){
 			alert("보내는 사람 이름을 입력하세요")
@@ -106,6 +144,7 @@ $(function(){
 		// userName과 message를 묶어서 JSON 데이터로 생성
 		let message = {
 			userName : userName,
+			toUser : toUserId,
 			message : $("#message").val()
 		}
 		
@@ -114,9 +153,13 @@ $(function(){
 		html += "나 : "
 		html += "</span>"
 		html += message.message
+		html += "<span>("
+		html += toUserName
+		html += ")</span>"
 		html += "</div>"
 		
 		$("#message_list").append(html)
+		$("#message_list").scrollTop($("#message_list").prop('scrollHeight'))
 		
 		// socket을 통해 json 데이터를 보내기 위해
 		// json 형 문자열로 변환시킨 후 전송
@@ -124,7 +167,7 @@ $(function(){
 		$("#message").val("")
 	})
 	
-	socket.send("getUserList")
+	//socket.send("getUserList")
 	
 })
 </script>
@@ -134,6 +177,11 @@ $(function(){
 <header class="jumbotron bg-success">
 	<h2 class="text-white text-center">MY CHART SERVICE</h2>
 </header>
+
+<section class="container-fluid">
+	<div id="message_list">
+	</div>
+</section>
 
 	<section class="container-fluid">
 		<form>
@@ -157,12 +205,7 @@ $(function(){
 		</form>
 	</section>
 
-<section class="container-fluid">
-	<div id="user_list" class="col-3">
-	</div>
-	<div id="message_list" class="col-8">
-	</div>
-</section>
+
 
 </body>
 </html>

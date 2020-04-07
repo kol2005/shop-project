@@ -107,7 +107,7 @@ public class ChatController extends TextWebSocketHandler{
 			// 자신이 보낸 메시지는 다시 자신에게 보낼 필요는 없기 때문에
 			// 자신이 보낸 메시지를 제외하고 전송
 			if(!ws.getId().equals(session.getId())) {
-				ws.sendMessage(textMessage);
+				ws.sendMessage(sendMessage);
 				
 			}
 		}
