@@ -85,7 +85,7 @@
 	<security:intercept-url pattern="/user/**" access="permitAll()"/>
 	<security:intercept-url pattern="/**" access="permitAll()"/>
 	<security:form-login
-		login-page="/login"
+		login-page="/user/login"
 		login-processing-url=""
 		default-target-url=""
 		username-parameter="username"
