@@ -45,11 +45,11 @@ public class UserController {
 	@RequestMapping(value="/idcheck",method=RequestMethod.GET)
 	public String idcheck(String username) {
 		
-		boolean ret = userService.isExistsId(username);
+		boolean ret = userService.isExistsUserName(username);
 		if(ret) {
-			return "USE";
+			return "Exists".toUpperCase(); // EXISTS
 		}
-		return "YES";
+		return "NonExists".toUpperCase(); // NONEXISTS
 	}
 	
 	@ResponseBody

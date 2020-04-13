@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.score.persistance.ScoreDao">
+ 
+ 
+ 	<select id="selectAll" resultType="scorepivotVO">
+ 	SELECT s_num,
+	SUM(CASE WHEN s_subject ='국어' 
+		THEN s_score ELSE 0 END) AS s_kor,
+	SUM(CASE WHEN s_subject ='영어' 
+		THEN s_score ELSE 0 END) AS s_eng,
+	SUM(CASE WHEN s_subject ='수학' 
+		THEN s_score ELSE 0 END) AS s_math,
+	SUM(CASE WHEN s_subject ='과학' 
+		THEN s_score ELSE 0 END) AS s_si,
+	SUM(CASE WHEN s_subject ='국사' 
+		THEN s_score ELSE 0 END) AS s_his
+	FROM tbl_score
+	GROUP BY s_num
+ 	</select>
+ 
+ 	<insert id="insert">
+	
+	INSERT INTO `tbl_score`
+	(
+	`s_num`,
+	`s_subject`,
+	`s_score`
+	)
+	VALUES
+	(
+	#{s_num},
+	#{s_subject},
+	#{s_score}
+	)
+
+ 	</insert>
+ 	
+ 	<update id="update">
+ 	
+ 	UPDATE `tbl_score`
+	SET
+	`s_num` = #{s_num},
+	`s_subject` = #{s_subject},
+	`s_score` = #{s_score}
+	WHERE `s_num` = #{s_num}
+	 	
+ 	</update>
+ 
+ </mapper> 
