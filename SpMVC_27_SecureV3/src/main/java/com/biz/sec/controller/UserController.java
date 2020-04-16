@@ -1,7 +1,10 @@
 package com.biz.sec.controller;
 
 import java.security.Principal;
+import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.sec.domain.UserDetailsVO;
+import com.biz.sec.domain.UserVO;
 import com.biz.sec.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -54,6 +58,16 @@ public class UserController {
 		}
 		return "NonExists".toUpperCase(); // NONEXISTS
 	}
+
+	@ResponseBody
+	@RequestMapping(value="/password",method=RequestMethod.POST)
+	public String password(String password) {
+		
+		boolean ret = userService.check_password(password);
+		if(ret)return "PASS_OK";
+		
+		return "PASS_FAIL";
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="",method=RequestMethod.GET)
@@ -67,19 +81,69 @@ public class UserController {
 	@RequestMapping(value="/mypage",method=RequestMethod.GET)
 	public String mypage(Model model,Principal principal) {
 		
-//		UserDetailsVO userVO = userService.findById(id);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		userVO.setAuthorities(upa.getAuthorities());
+		
+		model.addAttribute("userVO",userVO);
+		
 		model.addAttribute("PRINCIPAL",principal);
 		
-		return "user/mypage";
+//		return "user/mypage";
+		
+		return "auth/user_view";
 //		return userVO;
 	}
 	
+	@RequestMapping(value="/mypage1",method=RequestMethod.GET)
+	public String mypage(Model model) {
+
+		// 로그인한 사용자 정보
+		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder
+								.getContext().getAuthentication().getPrincipal();
+		
+		// 권한(ROLE)리스트 추출하여 userVO에 setting
+		userVO.setAuthorities(SecurityContextHolder
+							.getContext().getAuthentication().getAuthorities());
+		
+		model.addAttribute("userVO",userVO);
+		
+//		return "user/mypage";
+		
+		return "auth/user_view";
+	}
+	
+//	@RequestMapping(value="/update",method=RequestMethod.GET)
+//	public String update(String username,Model model,Principal principal) {
+//		
+//		UserVO userVO = userService.update(username);
+//		
+//		return "";
+//	}
+	
+	@RequestMapping(value="/mypage",method=RequestMethod.POST)
+	public String mypage(UserDetailsVO userVO,String[] auth,Model model,Principal principal) {
+		
+		/*
+		 * Security Session 정보가 저장된 메모리에 직접 접근하여
+		 * session user 정보를 수정하는 방법
+		 * 코드는 쉬워지나 보안에 치명적인 문제를 일으킬 수 있다
+		 * UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		 * UserDetailsVO oldUserVO = (UserDetailsVO) upa.getPrincipal();
+		 * oldUserVO.setEmail(userVO.getEmail());
+		 */
+		
+		int ret = userService.update(userVO,auth);
+		return "redirect:/user/mypage";
+	}
+	
+	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(Model model,Principal principal) {
+	public String update(String username,Model model,Principal principal) {
 		
+		UserVO userVO = userService.update(username);
 		
-		
-		return "";
+		return "redirect:/";
 	}
 
 

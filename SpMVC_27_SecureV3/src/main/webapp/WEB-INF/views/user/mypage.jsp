@@ -24,7 +24,7 @@
 <script>
 	$(function() {
 		$(document).on("click", "#btn-update", function() {
-			document.location.href = "${rootPath}/user/update"
+			document.location.href = "${rootPath}/user/update?username=${PRINCIPAL.principal.username}"
 		})
 	})
 </script>
@@ -33,6 +33,12 @@
 	<div class="container">
 		<h2>마이페이지</h2>
 		<div class="list-group">
+			<form:form method="POST" action="${rootPath}/user/update">
+			
+			<div class="list-group-item list-group-item-primary">id :
+			${PRINCIPAL.principal.id}</div>
+			
+			
 			<div class="list-group-item list-group-item-primary">아이디 :
 				${PRINCIPAL.principal.username}</div>
 
@@ -48,6 +54,7 @@
 			<div class="list-group-item list-group-item-action">
 				주소 : <input id="address" class="address" value="${PRINCIPAL.principal.address}">
 			</div>
+			</form:form>
 		</div>
 		
 		<div>
