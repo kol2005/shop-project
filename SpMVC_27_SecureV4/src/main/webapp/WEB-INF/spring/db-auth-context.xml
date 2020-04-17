@@ -51,6 +51,7 @@ Environment... 클래스가 제공하는 Salt와, 알고리즘 설정을 사용�
 	<property name="locations">
 		<list>
 			<value>/WEB-INF/spring/properties/db.connection.properties</value>
+			<value>/WEB-INF/spring/properties/naver.connection.properties</value>
 		</list>
 	</property>
 </bean>
