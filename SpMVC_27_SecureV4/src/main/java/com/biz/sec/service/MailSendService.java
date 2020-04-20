@@ -17,7 +17,9 @@ public class MailSendService {
 	private final JavaMailSender javaMailSender;
 
 	
-	public MailSendService(@Qualifier("naverMailHandler")JavaMailSender javaMailSender) {
+//	public MailSendService(@Qualifier("gmailMailHandler")JavaMailSender javaMailSender) {//gmail
+	public MailSendService(@Qualifier("naverMailHandler")JavaMailSender javaMailSender) {//naver
+		
 		super();
 		this.javaMailSender = javaMailSender;
 	}
