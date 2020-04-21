@@ -10,6 +10,13 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf"%>
 <style>
+
+h3{
+background-color: pink;
+text-align: center;
+padding: 10px;
+}
+
 #body {
 	position: fixed;
 	top: 60px;

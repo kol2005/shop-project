@@ -15,6 +15,13 @@ body{
 	display: flex;
 	margin: 0 auto;
 }
+.nav-menu{
+display: flex;
+}
+.nav-login-menu{
+	margin-left: auto;
+		display: inline-flex;
+}
 
 #navbar{
 	background-color: #333;
@@ -81,10 +88,12 @@ $(function(){
 })
 </script>
 <nav id="navbar">
-	<a href="${rootPath}/">HOME</a>
-	<a href="#">성적처리</a>
-	<a href="#">독서록 관리</a>
-	
+	<div class="nav-menu">
+		<a href="${rootPath}/">HOME</a>
+		<a href="#">성적처리</a>
+		<a href="#">독서록 관리</a>
+	</div>
+	<div class="nav-login-menu">
 	<sec:authorize access="isAnonymous()">
 		<a href="${rootPath}/user/login">로그인</a>
 	</sec:authorize>
@@ -97,4 +106,5 @@ $(function(){
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<a href="${rootPath}/admin">관리자 홈</a>
 	</sec:authorize>
+	</div>
 </nav>

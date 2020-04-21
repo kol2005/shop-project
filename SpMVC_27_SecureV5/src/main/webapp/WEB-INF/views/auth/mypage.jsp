@@ -12,9 +12,12 @@
 </head>
 <style>
 .container {
-	margin-left: 15rem;
-	margin-top: 7rem;
+	width: 50%;
+	margin: 5rem 20rem;
 	border: 1px solid red;
+}
+.list-group{
+padding: 30px;
 }
 
 .btn {
@@ -26,12 +29,6 @@ section {
 	position: fixed;
 	top: 70px;
 	left: 0;
-	width: 100%;
-}
-
-form {
-	width: 70%;
-	margin: 10px auto;
 }
 
 form div.password {
@@ -97,13 +94,13 @@ display: block;
 			<div class="password list-group-item list-group-item-danger">
 				<input id="password" type="password" placeholder="비밀번호를 입력!!">
 			</div>
-			<div class="list-group-item list-group-item-action">
+			<div class="list-group-item list-group-item-info">
 				<form:input path="email" placeholder="Email"/>
 			</div>
-			<div class="list-group-item list-group-item-action">
+			<div class="list-group-item list-group-item-info">
 				<form:input path="phone" placeholder="전화번호"/>
 			</div>
-			<div class="list-group-item list-group-item-action">
+			<div class="list-group-item list-group-item-info">
 				<form:input path="address" placeholder="주소"/>
 			</div>
 			

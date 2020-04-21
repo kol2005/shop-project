@@ -11,20 +11,26 @@
 <style>
 *{
 
+
 }
 
 body{
-width: 50%;
-margin: 0 auto;
+
 box-sizing: border-box;
 
 }
 
 .container{
+margin: 10rem auto;
+width: 50%;
 padding: 50px;
 text-align: center;
-margin: 200px;
 border: 1px solid red;
+
+}
+
+.input-username{
+margin-left: 10px;
 }
 
 .btn{
@@ -37,6 +43,8 @@ font-weight: bold;
 font-size: 0.3rem;
 
 }
+
+
 
 .view_pass{
 margin: 10px;
@@ -119,7 +127,7 @@ $(function(){
 			let change = $(this).is(":checked") ? "text" : "password";
 			// 가상의 input 생성
 			// <input type='text'> 또는 <input type='password'>
-			let ref = $("<input type='" + change + "' />")
+			let ref = $("<input type='" + change + "' class='view_pass form-control'/>")
 			.val(input_ref.val())
 			.insertBefore(input_ref);
 			
@@ -135,20 +143,22 @@ $(function(){
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 	<div class="container container-fluid">
-		<form:form method="POST" action="${rootPath}/join/user" class="join_form" modelAttribute="userVO">
+		<form:form method="POST" action="${rootPath}/join/join_next" class="join_form" modelAttribute="userVO">
 			<h2>회원가입</h2>
 			<!-- 
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
  			-->
+ 				<div class="input-tag container-fluid">
 				 <form:input type="text" path="username"
-					placeholder="User ID"/>
+					placeholder="User ID" class="form-control input-username"/>
+		
 				<div class="message" id="m_username"></div>
 				
-				 <form:input type="password" class="view_pass"
+				 <form:input type="password" class="view_pass form-control"
 					path="password" placeholder="비밀번호"/><br>
-				<input type="password" class="view_pass"
+				<input type="password" class="view_pass form-control"
 				id="re_password" name="re_password"	placeholder="비밀번호 확인">
-				
+				</div>
 			<div class="option">
 				<label for="view_pass">
 				<input type="checkbox" id="view_pass">

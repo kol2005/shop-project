@@ -11,19 +11,26 @@ margin: 10px auto;
 width:50%;
 }
 
-form {
-	width: 60%;
-	margin: 10px auto;
-}
-
 form label{
 display: inline-block;
 width: 150px;
 text-align: right;
 }
 
+.auth {
+margin: 5px;
+}
+
+#auth_append{
+margin: 5px;
+margin-right: 15px;
+}
+
+#btn_save{
+margin: 10px;
+}
+
 #auth_box,#btn_save{
-text-align: right;
 }
 
 form input.auth {
@@ -31,31 +38,31 @@ form input.auth {
 }
 </style>
 
-	<section>
-		<form:form modelAttribute="userVO">
+	<section class="container">
+		<form:form modelAttribute="userVO" class="list-group">
 
-			<div>
+			<div class="list-group-item list-group-item-primary">
 				<label for="username">UserName : </label>
 				<form:input path="username" readonly="true" />
 			</div>
-			<div>
+			<div class="list-group-item list-group-item-info">
 			<label for="email">Email : </label>
 				<form:input path="email" />
 			</div>
-			<div>
+			<div class="list-group-item list-group-item-info">
 			<label for="phone">Phone : </label>
 				<form:input path="phone" />
 			</div>
-			<div>
+			<div class="list-group-item list-group-item-info">
 			<label for="address">Address : </label>
 				<form:input path="address" />
 			</div>
-			<div>
+			<div class="list-group-item list-group-item-info">
 			<label for="address">계정 활성화 : </label>
 				<form:checkbox path="enabled" />
 			</div>
 
-			<div id="auth_box">
+			<div id="auth_box"  class="list-group-item list-group-item-info">
 				<button id="auth_append" type="button" class="btn btn-danger">권한 정보 입력 추가</button>
 				<c:if test="${not empty userVO.authorities}">
 					<c:forEach items="${userVO.authorities}" var="auth">
