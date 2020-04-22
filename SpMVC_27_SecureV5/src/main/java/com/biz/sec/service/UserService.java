@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
@@ -127,6 +128,7 @@ public class UserService {
 	 * @return
 	 */
 //	public int insert(UserDetailsVO userVO) {
+	@Transactional(isolation = Isolation.READ_COMMITTED,rollbackFor = Exception.class)
 		public int insert(UserDetailsVO userVO) {
 
 		// 회원정보에 저장할 준비가 되지만
@@ -171,6 +173,7 @@ public class UserService {
 		return userVO;
 	}
 
+	@Transactional
 	public UserDetailsVO update(String username) {
 		
 		UserDetailsVO userVO = userDao.update(username);
@@ -187,6 +190,7 @@ public class UserService {
 		return passwordEncoder.matches(password,userVO.getPassword());
 	}
 
+	@Transactional
 	public int update(UserDetailsVO userVO,String[] authList) {
 		int ret = userDao.update(userVO);
 			if(ret > 0) {
