@@ -119,8 +119,12 @@ public class UserController {
 //		return "";
 //	}
 	
+	/*
+	 * mypage에서 저장을 눌렀을떄 form에 입력된 데이터가
+	 * userVO에 담겨서 전달되어 온다.
+	 */
 	@RequestMapping(value="/mypage",method=RequestMethod.POST)
-	public String mypage(UserDetailsVO userVO,String[] auth,Model model,Principal principal) {
+	public String mypage(UserDetailsVO userVO,Model model,Principal principal) {
 		
 		/*
 		 * Security Session 정보가 저장된 메모리에 직접 접근하여

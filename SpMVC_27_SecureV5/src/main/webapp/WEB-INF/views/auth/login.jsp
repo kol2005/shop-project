@@ -61,7 +61,7 @@ $(function(){
 		</div>
 		<div class="form-group">
 		<label for="pwd">Password:</label>
-		<input id="password" name="password" placeholder="비밀번호" class="form-control">
+		<input id="password" name="password" type="password" placeholder="비밀번호" class="form-control">
 		</div>
 		<button class="btn btn-success">로그인</button>
 		<button class="btn btn-info join" type="button">회원가입</button>

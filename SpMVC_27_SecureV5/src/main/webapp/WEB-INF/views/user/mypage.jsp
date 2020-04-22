@@ -39,7 +39,7 @@
 			${PRINCIPAL.principal.id}</div>
 			
 			
-			<div class="list-group-item list-group-item-primary">아이디 :
+			<div class="list-group-item list-group-item-primary" readonly="true">아이디 :
 				${PRINCIPAL.principal.username}</div>
 
 			<div class="list-group-item list-group-item-danger">비밀번호 :

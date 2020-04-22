@@ -210,6 +210,12 @@ public class UserService {
 		return ret;
 	}
 	
+	/**
+	 * MyPage Update 용 
+	 * 
+	 * @param userVO
+	 * @return
+	 */
 	@Transactional
 	public int update(UserDetailsVO userVO) {
 		
@@ -221,7 +227,7 @@ public class UserService {
 		oldUserVO.setPhone(userVO.getPhone());
 		oldUserVO.setAddress(userVO.getAddress());
 		
-		int ret = userDao.update(userVO);
+		int ret = userDao.update(oldUserVO);
 		
 		// DB update가 성공하면
 		// 로그인된 session 정보를 update 수행
