@@ -47,8 +47,13 @@ font-size: 0.3rem;
 
 
 .view_pass{
-margin: 10px;
+margin-top: 10px;
+margin-left: 10px;
 }
+.re_view_pass{
+margin-left: 10px;
+}
+
 </style>
 <script>
 $(function(){
@@ -126,8 +131,28 @@ $(function(){
 		$("input#view_pass").click(function(){
 			let change = $(this).is(":checked") ? "text" : "password";
 			// 가상의 input 생성
-			// <input type='text'> 또는 <input type='password'>
-			let ref = $("<input type='" + change + "' class='view_pass form-control'/>")
+			// <input type='text' class='view_pass form-control' id='password' name='password'>
+			// 또는 <input type='password' class='view_pass form-control' id='password' name='password'>
+			let ref = $("<input type='" + change + "' class='view_pass form-control' id='password' name='password'/>")
+			.val(input_ref.val())
+			.insertBefore(input_ref);
+			
+			input_ref.remove();
+			input_ref = ref;
+		})
+	})
+	
+		// 현재 DOM 화면에 class가 re_view_pass인 모든것에 적용 
+	$(".re_view_pass").each(function(index,input){
+		// 매개변수로 전달된 input을 선택하여
+		// 변수 $input에 임시 저장하라
+		let input_ref = $(input)
+		$("input#view_pass").click(function(){
+			let change = $(this).is(":checked") ? "text" : "password";
+			// 가상의 input 생성
+			// <input type='text' class='re_view_pass form-control' id='re_password' name='re_password'>
+			// 또는 <input type='password' class='re_view_pass form-control' id='re_password' name='re_password'>
+			let ref = $("<input type='" + change + "' class='re_view_pass form-control' id='re_password' name='re_password' />")
 			.val(input_ref.val())
 			.insertBefore(input_ref);
 			
@@ -156,7 +181,7 @@ $(function(){
 				
 				 <form:input type="password" class="view_pass form-control"
 					path="password" placeholder="비밀번호"/><br>
-				<input type="password" class="view_pass form-control"
+				<input type="password" class="re_view_pass form-control"
 				id="re_password" name="re_password"	placeholder="비밀번호 확인">
 				</div>
 			<div class="option">
