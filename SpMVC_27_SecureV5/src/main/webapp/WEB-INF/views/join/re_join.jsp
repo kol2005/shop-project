@@ -57,11 +57,6 @@ margin-left: 10px;
 </style>
 <script>
 $(function(){
-	
-	$(document).on("click","#btn-loss",function(){
-		document.location.href = "${rootPath}/join/find_userid"
-	})
-	
 	$(document).on("click","#btn-join",function(){
 		
 		// 유효성검사
@@ -69,12 +64,6 @@ $(function(){
 		let username = $("#username")
 		let password = $("#password")
 		let re_password = $("#re_password")
-		
-		if(username.val() == "") {
-			alert("아이디를 입력하세요")
-			username.focus()
-			return false;
-		}
 		
 		if(password.val() == "") {
 			alert("비밀번호를 입력하세요")
@@ -106,26 +95,6 @@ $(function(){
 			return false;
 		}
 		
-		$.ajax({
-			url : "${rootPath}/user/idcheck",
-			method : "GET",
-			data : {username : username},
-			success : function(result){
-				console.log(result)
-				if(result == "EXISTS"){
-					$("#m_username").text("이미 가입된 사용자 이름입니다")
-					$("#m_username").css("color","red")
-					$("#username").focus()
-					return false
-				}else {
-					$("#m_username").text("* 사용가능한 ID 입니다")
-				}
-			},
-			error:function(){
-				$("#m_username").text("* 서버통신오류")
-				return false
-			}
-		})
 	})
 	
 	// 현재 DOM 화면에 class가 view_pass인 모든것에 적용 
@@ -173,13 +142,13 @@ $(function(){
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 	<div class="container container-fluid">
-		<form:form method="POST" action="${rootPath}/join/join_next" class="join_form" modelAttribute="userVO">
-			<h2>회원가입</h2>
+		<form:form method="POST" action="${rootPath}/join/re_join" class="join_form" modelAttribute="userVO">
+			<h2>비밀번호 재입력</h2>
 			<!-- 
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
  			-->
  				<div class="input-tag container-fluid">
-				 <form:input type="text" path="username"
+				 <form:input type="text" path="username" readonly="true"
 					placeholder="User ID" class="form-control input-username"/>
 		
 				<div class="message" id="m_username"></div>
@@ -188,6 +157,10 @@ $(function(){
 					path="password" placeholder="비밀번호"/><br>
 				<input type="password" class="re_view_pass form-control"
 				id="re_password" name="re_password"	placeholder="비밀번호 확인">
+				
+				<form:input type="email" class="form-control"
+					path="email" readonly="true" placeholder="E-mail"/><br>
+					
 				</div>
 			<div class="option">
 				<label for="view_pass">
@@ -195,8 +168,7 @@ $(function(){
 				비밀번호 보이기</label>
 			</div>
 
-			<button class="btn btn-info" type="button" id="btn-join">회원가입</button>
-			<button class="btn btn-warning" type="button" id="btn-loss">id/비밀번호 찾기</button>
+			<button class="btn btn-info" type="button" id="btn-join">저장</button>
 		</form:form>
 	</div>
 </body>

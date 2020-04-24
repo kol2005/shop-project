@@ -36,6 +36,17 @@
 			 		 select="findByUserNameAuthorities"/>
  	</resultMap>
  	
+ 	 <select id="findByUserEmail" resultMap="userAndAuthorities">
+ 		SELECT
+ 		 user_name AS username,
+ 		 user_pass AS password,
+ 		 enabled,
+ 		 email,
+ 		 phone,
+ 		 address 
+ 		 FROM tbl_users WHERE email = #{email}
+ 	</select>
+ 	
  	<select id="findById" resultMap="userAndAuthorities">
  		SELECT
  		 user_name AS username,
@@ -77,6 +88,17 @@
  	<update id="update" parameterType="userDetailsVO">
  		UPDATE tbl_users
  		SET email = #{email},
+ 			phone = #{phone},
+ 			address = #{address},
+ 			enabled = #{enabled}
+ 		WHERE user_name = #{username}
+ 		
+	</update>
+	
+	 <update id="re_update" parameterType="userDetailsVO">
+ 		UPDATE tbl_users
+ 		SET user_pass = #{password},
+ 			email = #{email},
  			phone = #{phone},
  			address = #{address},
  			enabled = #{enabled}

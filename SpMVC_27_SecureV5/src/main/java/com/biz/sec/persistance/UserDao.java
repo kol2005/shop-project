@@ -15,6 +15,8 @@ public interface UserDao {
 	
 	public UserDetailsVO findByUserName(String username);
 	
+	public UserDetailsVO findByUserEmail(String email);
+	
 	public int insert(UserDetailsVO userVO);
 
 	
@@ -23,5 +25,7 @@ public interface UserDao {
 	public UserDetailsVO update(String username);
 
 	public int update(UserDetailsVO userVO);
+
+	public int re_update(UserDetailsVO userVO);
 	
 }

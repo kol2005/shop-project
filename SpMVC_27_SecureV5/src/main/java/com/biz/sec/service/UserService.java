@@ -265,6 +265,10 @@ public class UserService {
 	public UserDetailsVO findByUserName(String username) {
 		return userDao.findByUserName(username);
 	}
+	// 아이디 비밀번호찾기 실험용
+	public UserDetailsVO findByEmail2(String email) {
+		return userDao.findByUserEmail(email);
+	}
 
 	@Transactional
 	public boolean emailok(String username, String email) {
@@ -327,6 +331,27 @@ public class UserService {
 		
 		return enc_email_token;
 	}
+	/*
+	 * ID를 찾기 위해 인증정보를 생성하고 Controller로 return
+	 */
+	public String findId_getToken(UserDetailsVO userVO) {
+		// DB에 저장//id 찾기 위한 메서드니깐 저장 불필요
+//		userVO.setEnabled(false);
+//		String encPassword = passwordEncoder.encode(userVO.getPassword());
+//		userVO.setPassword(encPassword);
+		
+//		userDao.insert(userVO);
+		
+		String email_token = UUID.randomUUID().toString()
+				.split("-")[0].toUpperCase();
+		log.debug("EMAIL-TOKEN : " + email_token);
+		String enc_email_token = PBEEncryptor.getEncrypt(email_token);
+		
+		// Email 보내기
+		mailService.email_auth(userVO,email_token);
+		
+		return enc_email_token;
+	}
 
 	public boolean email_token_ok(String username, String secret_key, String secret_value) {
 		
@@ -354,6 +379,55 @@ public class UserService {
 		}
 		
 		return bKey;
+	}
+	// id찾기용 이메일 인증 토큰
+	public boolean findid_email_token_ok(String email,String secret_key, String secret_value) {
+		
+		boolean bKey = PBEEncryptor.getDecrypt(secret_key).equals(secret_value);
+		
+		if(bKey) {
+			log.debug("이메일 : " + email);
+//			String strUserEmail = PBEEncryptor.getDecrypt(secret_email);
+			log.debug("이메일 : " + email);
+			UserDetailsVO userVO = userDao.findByUserEmail(email);
+			
+			userVO.setEnabled(true);
+			userDao.update(userVO);
+			authDao.delete(userVO.getUsername());
+			
+			
+			// ID 찾기니깐 인서트 필요없음
+//			List<AuthorityVO> authList = new ArrayList();
+//			authList.add(AuthorityVO.builder()
+//					.username(userVO.getUsername())
+//					.authority("ROLE_USER")
+//					.build());
+//			authList.add(AuthorityVO.builder()
+//					.username(userVO.getUsername())
+//					.authority("USER")
+//					.build());
+
+//			authDao.insert(authList);
+		}
+		
+		return bKey;
+	}
+
+	public UserDetailsVO findByEmail(UserDetailsVO userVO) {
+		UserDetailsVO re_userVO = userDao.findByUserEmail(userVO.getEmail());
+		
+		re_userVO.setPassword(null);
+		
+		return re_userVO;
+	}
+
+	public int re_user_join(UserDetailsVO userVO) {
+//		userVO = userDao.findByUserEmail(email);
+		String encPassword = passwordEncoder.encode(userVO.getPassword());
+		userVO.setPassword(encPassword);
+		userVO.setEnabled(true);
+		int ret = userDao.re_update(userVO);
+		return ret;
 	}
 
 

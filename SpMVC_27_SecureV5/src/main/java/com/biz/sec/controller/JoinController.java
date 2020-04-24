@@ -1,8 +1,11 @@
 package com.biz.sec.controller;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +14,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.biz.sec.domain.UserDetailsVO;
+import com.biz.sec.service.MailSendService;
 import com.biz.sec.service.UserService;
 import com.biz.sec.utils.PBEEncryptor;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Spring Security 기반 
@@ -24,6 +29,7 @@ import lombok.RequiredArgsConstructor;
  * @since 2020-04-20
  * @author 박동민
  */
+@Slf4j
 @RequiredArgsConstructor
 @SessionAttributes("userVO")
 @RequestMapping(value="/join")
@@ -31,6 +37,8 @@ import lombok.RequiredArgsConstructor;
 public class JoinController {
 
 	private final UserService userService;
+	
+	private MailSendService mailService;
 	
 	@ModelAttribute("userVO")
 	public UserDetailsVO newUser() {
@@ -101,6 +109,49 @@ public class JoinController {
 		return "join/join_email";
 	}
 	
+	/*
+	 * ID/비밀번호 찾기 메서드 미구현
+	 */
+	@RequestMapping(value="/find_userid",method=RequestMethod.GET)
+	public String find_userid(@ModelAttribute("userVO")UserDetailsVO userVO,Model model) {
+		return "join/find_id";
+	}
+	/*
+	 * ID/비밀번호 찾기 메서드 미구현
+	 */
+	@RequestMapping(value="/find_userid",method=RequestMethod.POST)
+	public String find_id(@ModelAttribute("userVO")UserDetailsVO userVO,Model model) {
+		String email_token = userService.findId_getToken(userVO);
+		
+		model.addAttribute("username",PBEEncryptor.getEncrypt(userVO.getUsername()));
+		model.addAttribute("My_Email_Secret",email_token);
+		model.addAttribute("JOIN","EMAIL_OK");
+		
+		return "join/find_id";
+	}
+	
+	@RequestMapping(value="/re_join",method=RequestMethod.GET)
+	public String re_join(@ModelAttribute("userVO")UserDetailsVO userVO,
+			Model model) {
+		UserDetailsVO re_join = userService.findByEmail(userVO);
+		
+		log.debug("이메일 : " + userVO);
+		model.addAttribute("USERVO",re_join);
+		return "join/re_join";
+//		return re_join;
+	}
+	
+//	@ResponseBody
+	@RequestMapping(value="/re_join",method=RequestMethod.POST)
+	public String re_join(UserDetailsVO userVO,
+			String email,Model model,String username) {
+		int ret = userService.re_user_join(userVO);
+		
+//		model.addAttribute("USERVO",ret);
+		return "redirect:/";
+	//		return re_join;
+	}
+	
 	/**
 	 * @since 2020-04-21
 	 * 이메일 인증폼에서 인증키와 인증값을 받아서
@@ -117,6 +168,18 @@ public class JoinController {
 			@RequestParam("secret_value")String secret_value) {
 		
 		boolean bKey = userService.email_token_ok(username,secret_key,secret_value);
+		
+		if(bKey)return "OK";
+		else return "FAIL";
+	}
+	@ResponseBody
+	@RequestMapping(value="/findid_email_token_check",method=RequestMethod.POST)
+	public String findid_email_token_check(
+			@RequestParam("email")String email,
+			@RequestParam("secret_key")String secret_key,
+			@RequestParam("secret_value")String secret_value) {
+		
+		boolean bKey = userService.findid_email_token_ok(email,secret_key,secret_value);
 		
 		if(bKey)return "OK";
 		else return "FAIL";
