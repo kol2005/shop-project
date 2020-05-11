@@ -4,6 +4,7 @@
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <style>
 *{
 	box-sizing: border-box;
@@ -58,9 +59,10 @@ form#logout{
 	margin-left: auto;
 }
 </style>
+
 <script>
 $(function(){
-	
+
 	var preScrollpos = $(window).scrollTop()
 	$(window).scroll(function(){
 		
@@ -85,27 +87,42 @@ $(function(){
 		}
 	})
 	
-	
 })
+
 </script>
+
 <nav id="navbar">
 	<div class="nav-menu">
 		<a href="${rootPath}/">HOME</a>
-		<a href="#">성적처리</a>
-		<a href="#">독서록 관리</a>
+		<a href="#">ㅁㅇ</a>
+		<a href="#">asd</a>
 	</div>
+	
 	<div class="nav-login-menu">
 	<sec:authorize access="isAnonymous()">
 		<a href="${rootPath}/user/login">로그인</a>
 	</sec:authorize>
+	
 	<sec:authorize access="isAuthenticated()">
 		<form:form action="${rootPath}/logout" id="logout">
 		<a href="javascript:void(0)" class="logout">로그아웃</a>
 		<a href="${rootPath}/user/mypage">MY PAGE</a>
 		</form:form>
 	</sec:authorize>
+	
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<a href="${rootPath}/admin">관리자 홈</a>
 	</sec:authorize>
 	</div>
+
 </nav>
+
+
+
+
+
+
+
+
+
+

@@ -41,6 +41,27 @@
 <bean id="authProvider" class="com.biz.sec.service.auth.AuthProviderImpl">
 </bean>
 
+<!-- 
+hasRole()에서 ROLE_USER와 USER의 값 검사
+security 4.2 미만에서는 반드시 DB에 ROLE_USER라고 저장되어 있으면
+hasRole('ROLE_USER') 이라고 검사를 해야 한다
+
+4.2 이상에서는 선택적으로 변경이 된다
+DB에 ROLE_USER 라고 저장되어 있을때
+검사할때는 hasRole('USER')라고만 검사를 해도 통과가 된다
+간혹 이 규칙이 적용이 안되는 버전이 있다
+
+편의상 DB에는 ROLE_USER, USER를 같이 등록을 해놓는다
+
+이러한 문제를 해결하기 위해 4.2 이상에서는 bean을 하나 설정하여
+DB에 ROLE_USER 라고 저장되어 있어도 hasRole('USER')라고
+검사하도록 강제로 적용할 수 있다
+ -->
+<bean id="grantedAuthorityDefaults" class="org.springframework.security.config.core.GrantedAuthorityDefaults">
+	<constructor-arg value="ROLE_"/>
+</bean>
+
+
 <!-- 사용자 login을 검증 -->
 <security:authentication-manager>
 	<security:authentication-provider ref="authProvider"/>
