@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.biz.shop.domain.UserVO;
+import com.biz.shop.domain.UserDetailsVO;
 import com.biz.shop.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,27 +24,20 @@ public class JoinController {
 	private final UserService userService;
 	
 	@ModelAttribute("userVO")
-	public UserVO newUser() {
-		return new UserVO();
+	public UserDetailsVO newUser() {
+		return new UserDetailsVO();
 	}
 	
 	@RequestMapping(value="",method=RequestMethod.GET)
-	public String join(@ModelAttribute("userVO")UserVO userVO,Model model) {
-		model.addAttribute(userVO);
+	public String join(@ModelAttribute("userVO")UserDetailsVO userVO,Model model) {
 		return "join/join";
 	}
 	
-	@RequestMapping(value="/join_next",method=RequestMethod.POST)
-	public String join_next(@ModelAttribute("userVO")UserVO userVO) {
-		return "join/join_email";
-	}
-	
 	@RequestMapping(value="/joinok",method=RequestMethod.POST)
-	public String joinok(@ModelAttribute("userVO")UserVO userVO,Model model,
+	public String joinok(@ModelAttribute("userVO")UserDetailsVO userVO,Model model,
 			SessionStatus session) {
 		int ret = userService.insert(userVO);
-		model.addAttribute("JOIN","EMAIL_OK");
-		
+		model.addAttribute("JOIN",userVO);
 		return "auth/login";
 	}
 	

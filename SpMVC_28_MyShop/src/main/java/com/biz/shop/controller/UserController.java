@@ -5,11 +5,12 @@ import java.security.Principal;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.biz.shop.domain.UserVO;
+import com.biz.shop.domain.UserDetailsVO;
 import com.biz.shop.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,12 +30,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join",method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute("userVO")UserDetailsVO userVO,Model model) {
+		model.addAttribute("userVO",userVO);
 		return "join/join";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/join",method=RequestMethod.POST)
+	@RequestMapping(value="/join",method=RequestMethod.POST,produces = "text/html;charset=UTF-8")
 	public String join(String username, String password) {
 		log.debug("아이디 {} , 비번 {} " , username,password);
 		
@@ -72,7 +74,7 @@ public class UserController {
 	public String mypage(Model model, Principal principal) {
 		
 		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
-		UserVO userVO = (UserVO) upa.getPrincipal();
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
 		userVO.setAuthorities(upa.getAuthorities());
 		
 		model.addAttribute("userVO",userVO);
@@ -83,14 +85,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/mypage",method=RequestMethod.POST)
-	public String mypage(UserVO userVO,Model model,Principal principal) {
+	public String mypage(UserDetailsVO userVO,Model model,Principal principal) {
 		int ret = userService.update(userVO);
 		return "redirect:/user/mypage";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public String update(String username,Model model,Principal principal) {
-		UserVO userVO = userService.update(username);
+		UserDetailsVO userVO = userService.update(username);
 		return "redirect:/";
 	}
 	

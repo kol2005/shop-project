@@ -18,9 +18,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class UserVO implements UserDetails{
+public class UserDetailsVO implements UserDetails{
 	
-	private static final long SerialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	private long id;
 	private String username;

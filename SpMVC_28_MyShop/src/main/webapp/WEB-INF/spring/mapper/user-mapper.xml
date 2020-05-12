@@ -27,7 +27,7 @@
  		 FROM tbl_users
  	</select>
  
- 	<resultMap type="userVO" id="userAndAuthorities">
+ 	<resultMap type="userDetailsVO" id="userAndAuthorities">
  		<id column="id" property="id"/>
  		<result property="username" column="username"/>
  		<collection property="authorities"
@@ -85,7 +85,7 @@
 		)
  	</insert>
  	
- 	<update id="update" parameterType="userVO">
+ 	<update id="update" parameterType="userDetailsVO">
  		UPDATE tbl_users
  		SET email = #{email},
  			phone = #{phone},
@@ -95,7 +95,7 @@
  		
 	</update>
 	
-	 <update id="re_update" parameterType="userVO">
+	 <update id="re_update" parameterType="userDetailsVO">
  		UPDATE tbl_users
  		SET user_pass = #{password},
  			email = #{email},

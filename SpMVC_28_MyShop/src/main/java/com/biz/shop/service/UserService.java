@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.shop.domain.AuthVO;
-import com.biz.shop.domain.UserVO;
+import com.biz.shop.domain.UserDetailsVO;
 import com.biz.shop.persistance.AuthDao;
 import com.biz.shop.persistance.UserDao;
 
@@ -64,7 +64,7 @@ public class UserService {
 	@Transactional
 	public int insert(String username, String password) {
 		String encPassword = passwordEncoder.encode(password);
-		UserVO userVO = UserVO.builder()
+		UserDetailsVO userVO = UserDetailsVO.builder()
 				.username(username)
 				.password(encPassword)
 				.build();
@@ -86,8 +86,8 @@ public class UserService {
 	}
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED,rollbackFor = Exception.class)
-	public int insert(UserVO userVO) {
-		userVO.setEnabled(false);
+	public int insert(UserDetailsVO userVO) {
+		userVO.setEnabled(true);
 		userVO.setAuthorities(null);
 		
 		String encPassword = passwordEncoder.encode(userVO.getPassword());
@@ -101,7 +101,7 @@ public class UserService {
 	}
 	
 	public boolean isExistsUserName(String username) {
-		UserVO userVO = userDao.findByUserName(username);
+		UserDetailsVO userVO = userDao.findByUserName(username);
 		if(userVO != null && userVO.getUsername().equalsIgnoreCase(username)) {
 			return true;
 		}
@@ -109,19 +109,19 @@ public class UserService {
 		return false;
 	}
 	
-	public UserVO findById(long id) {
-		UserVO userVO = userDao.findById(id);
+	public UserDetailsVO findById(long id) {
+		UserDetailsVO userVO = userDao.findById(id);
 		return userVO;
 	}
 	
 	@Transactional
-	public UserVO update(String username) {
-		UserVO userVO = userDao.update(username);
+	public UserDetailsVO update(String username) {
+		UserDetailsVO userVO = userDao.update(username);
 		return userVO;
 	}
 	
 	public boolean check_password(String password) {
-		UserVO userVO = (UserVO) SecurityContextHolder
+		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder
 				.getContext()
 				.getAuthentication()
 				.getPrincipal();
@@ -130,7 +130,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public int update(UserVO userVO,String[] authList) {
+	public int update(UserDetailsVO userVO,String[] authList) {
 		int ret = userDao.update(userVO);
 		if(ret > 0) {
 			List<AuthVO> authCollection = new ArrayList();
@@ -150,11 +150,11 @@ public class UserService {
 	}
 	
 	
-	public int update(UserVO userVO) {
+	public int update(UserDetailsVO userVO) {
 		Authentication oldAuth = SecurityContextHolder
 				.getContext().getAuthentication();
 		
-		UserVO oldUserVO = (UserVO) oldAuth.getPrincipal();
+		UserDetailsVO oldUserVO = (UserDetailsVO) oldAuth.getPrincipal();
 		oldUserVO.setEmail(userVO.getEmail());
 		oldUserVO.setPhone(userVO.getPhone());
 		oldUserVO.setAddress(userVO.getAddress());
@@ -186,15 +186,15 @@ public class UserService {
 	}
 	
 	@Transactional
-	public List<UserVO> selectAll(){
+	public List<UserDetailsVO> selectAll(){
 		return userDao.selectAll();
 	}
 	
-	public UserVO findByUserName(String username) {
+	public UserDetailsVO findByUserName(String username) {
 		return userDao.findByUserName(username);
 	}
 	
-	public UserVO findByEmail2(String email) {
+	public UserDetailsVO findByEmail2(String email) {
 		return userDao.findByUserEmail(email);
 	}
 	

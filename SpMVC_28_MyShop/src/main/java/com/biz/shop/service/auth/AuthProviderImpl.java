@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.biz.shop.domain.UserVO;
+import com.biz.shop.domain.UserDetailsVO;
 
 public class AuthProviderImpl implements AuthenticationProvider{
 
@@ -26,7 +26,7 @@ public class AuthProviderImpl implements AuthenticationProvider{
 		String username = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 		
-		UserVO userVO = (UserVO) userDService.loadUserByUsername(username);
+		UserDetailsVO userVO = (UserDetailsVO) userDService.loadUserByUsername(username);
 		if(!passwordEncoder.matches(password.trim(), userVO.getPassword().trim())) {
 			throw new BadCredentialsException("비밀번호 오류");
 		}
@@ -41,7 +41,7 @@ public class AuthProviderImpl implements AuthenticationProvider{
 	@Override
 	public boolean supports(Class<?> authentication) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

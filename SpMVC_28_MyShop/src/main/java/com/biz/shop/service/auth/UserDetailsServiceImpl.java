@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.biz.shop.domain.AuthVO;
-import com.biz.shop.domain.UserVO;
+import com.biz.shop.domain.UserDetailsVO;
 import com.biz.shop.persistance.AuthDao;
 import com.biz.shop.persistance.UserDao;
 
@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		UserVO userVO = userDao.findByUserName(username);
+		UserDetailsVO userVO = userDao.findByUserName(username);
 		if(userVO == null) {
 			throw new UsernameNotFoundException("UserName이 없습니다");
 		}
