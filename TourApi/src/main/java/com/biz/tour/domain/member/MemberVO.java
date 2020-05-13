@@ -23,4 +23,11 @@ public class MemberVO {
 	@NotBlank(message = "* 비번을 입력해 주세요")
 	private String u_password;
 	private String u_repassword;
+	private String u_role;
+	
+	private boolean enabled;
+	
+	private String email;
+	private String phone;
+	private String address;
 }

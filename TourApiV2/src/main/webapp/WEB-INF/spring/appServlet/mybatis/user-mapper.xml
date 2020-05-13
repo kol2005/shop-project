@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.tour.dao.member.UserDao">
+	<select id="findByUserName" resultMap="userAndAuthorities">
+	 select id,username as username, password as password, enabled, email, phone, address 
+			 from tbl_users where username=#{username} 
+	</select>
+	<select id="selectAll" resultMap="userAndAuthorities">
+	select username As username, password As password, email,phone,address
+	from tbl_users
+	</select>
+	<resultMap type="userDetailsVO" id="userAndAuthorities">
+		<id column="id" property="id" />
+		<result property="username" column="username" />
+		<collection property="authorities" column="username"
+			ofType="authorityVO" select="findByUserNameAuthorities" />
+	</resultMap>
+	<select id="findById" resultMap="userAndAuthorities">
+		select
+		id,
+		username AS username,
+		password AS password,
+		enabled,
+		email,
+		phone,
+		address
+		from tbl_users where id=#{id}
+	</select>
+
+	<select id="findByUserNameAuthorities" resultType="authorityVO">
+		select * from authorities where username=#{username}
+	</select>
+
+	<select id="create_table">
+		${create_table}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO `tbl_users`
+		(
+		`username`,
+		`password`,
+		email,
+		`enabled`)
+		VALUES
+		(
+		#{username},
+		#{password},
+		#{email},
+		#{enabled})
+	</insert>
+
+	<update id="update" parameterType="userDetailsVO">
+		UPDATE `tbl_users`
+		SET
+		`email` = #{email},
+		`phone` = #{phone},
+		`address` = #{address},
+		enabled=#{enabled}
+		WHERE `username` = #{username}
+
+	</update>
+	
+	<update id="changePass" parameterType="userDetailsVO">
+		UPDATE `tbl_users`
+		SET
+		`password` = #{password}
+		WHERE `username` = #{username}
+
+	</update>
+</mapper> 

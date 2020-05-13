@@ -21,6 +21,12 @@
 	</a>
 </li>
 
+<li class="nav-item">
+<a href="${rootPath }/mail ">
+		<p>SendMail To Administrator</p>
+	</a>
+</li>
+
 <c:if test="${U_NAME==null }">
 <li class="nav-item">
 <a href="${rootPath }/member/login">Login</a>

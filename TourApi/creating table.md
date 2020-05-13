@@ -64,7 +64,11 @@ create table tbl_members(
 	u_id bigint AUTO_INCREMENT	PRIMARY KEY,
     u_name nVARCHAR(50) unique,
     u_password nVARCHAR(150),
-    u_role nVARCHAR(15)
+    u_role nVARCHAR(15),
+    enabled boolean default true,
+    email nVARCHAR(50),
+    phone nVARCHAR(15),
+    address nVARCHAR(125)
 );
 
 
