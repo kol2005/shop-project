@@ -14,5 +14,8 @@ public interface MemberDao {
 	@Delete("delete from tbl where u_name=#{u_name}")
 	public int delete(String u_name);
 
-	public int update(MemberVO userVO);
+	public int update(MemberVO memberVO);
+
+	public int pwupdate(MemberVO memberVO);
+	
 }

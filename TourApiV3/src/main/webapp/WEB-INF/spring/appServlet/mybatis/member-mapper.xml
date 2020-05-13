@@ -30,5 +30,13 @@
 		WHERE `u_id` = #{u_id}
 
 	</update>
+	
+		<update id="pwupdate" parameterType="memberVO">
+		UPDATE `tbl_members`
+		SET
+		`u_password` = #{u_password}
+		WHERE `u_id` = #{u_id}
+
+	</update>
 
 </mapper> 

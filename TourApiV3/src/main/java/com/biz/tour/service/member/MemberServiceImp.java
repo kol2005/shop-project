@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +83,7 @@ public class MemberServiceImp implements MemberService{
 		mailService.email_auth(memberVO,email_token);
 		return enc_email_token;
 	}
+	
 	@Override
 	public int update(MemberVO memberVO) {
 		// TODO Auto-generated method stub
