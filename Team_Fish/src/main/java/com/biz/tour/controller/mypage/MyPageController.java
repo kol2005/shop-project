@@ -41,8 +41,8 @@ public class MyPageController {
 		if(loggedName==null || loggedName.isEmpty()) return null;
 		
 		MemberVO memberVO=memberService.findByUName(loggedName);
-		memberVO.setU_password("dummy");
-		memberVO.setU_repassword("dummy");
+		memberVO.setU_password("password");// 보안때문에 VO에 담겨있는 패스워드값 더미용으로 덮어쓰기
+		memberVO.setU_repassword("re_password");// 보안때문에 VO에 담겨있는 패스워드값 더미용으로 덮어쓰기
 		model.addAttribute("memberVO", memberVO);
 		//마이페이지 보여줄 jsp
 		return "mypage/mypage";
@@ -55,8 +55,8 @@ public class MyPageController {
 		if(loggedName==null || loggedName.isEmpty()) return null;
 		
 		MemberVO memberVO=memberService.findByUName(loggedName);
-		memberVO.setU_password("dummy");
-		memberVO.setU_repassword("dummy");
+		memberVO.setU_password("password");// 보안때문에 VO에 담겨있는 패스워드값 더미용으로 덮어쓰기
+		memberVO.setU_repassword("re_password");// 보안때문에 VO에 담겨있는 패스워드값 더미용으로 덮어쓰기
 		model.addAttribute("memberVO", memberVO);
 		//마이페이지 수정 form 보여줄 jsp
 		return "mypage/update";
@@ -109,6 +109,33 @@ public class MyPageController {
 	public String changePassword(MemberVO memberVO) {
 		int ret=mypageService.changePassword(memberVO);
 		// 비밀번호만 변경 입력받는 form jsp
+		return "redirect:/";
+	}
+	
+	
+	/*
+	 *  ID찾기,비번 재설정 이메일 인증키 체크 완료 후 비번 재설정 메서드
+	 *  db에서 이메일로 검색 후 비번만 초기화 하고 vo에 담아서 보내온 vo를 
+	 *  re_join.jsp로 보내기 
+	 */
+	@RequestMapping(value="/re_join",method=RequestMethod.GET)
+	public String re_join(MemberVO memberVO, Model model) {
+		
+		MemberVO re_join = memberService.findByIdresetpass(memberVO);
+		
+		model.addAttribute("MEMBERVO",re_join);
+		
+		return "mypage/re_join";
+	}
+	/*
+	 * ID찾기,비번 재설정 이메일 인증키 체크 완료 후 비번 재설정 메서드
+	 * re_join.jsp에서 비번 변경값 받아서 비번 변경 
+	 */
+	@RequestMapping(value="/re_join",method=RequestMethod.POST)
+	public String re_join(MemberVO memberVO, Model model,String email) {
+			
+		int ret = memberService.re_member_join(memberVO);
+			
 		return "redirect:/";
 	}
 }
