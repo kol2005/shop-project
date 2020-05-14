@@ -38,5 +38,6 @@
 		WHERE `u_id` = #{u_id}
 
 	</update>
+	
 
 </mapper> 
