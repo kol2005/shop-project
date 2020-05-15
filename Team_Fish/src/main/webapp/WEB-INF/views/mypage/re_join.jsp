@@ -77,7 +77,7 @@ $(function(){
 		}
 		
 		if(u_password.val() != re_password.val()){
-			alert("비밀번호와 비밀번호 확인이 다릅니다")
+			alert("비밀번호와 비밀번호 확인이 다릅니다" + u_password.val() +"\n"+ re_password.val())
 			u_password.focus()
 			return false;
 		}
@@ -106,7 +106,7 @@ $(function(){
 			// 가상의 input 생성
 			// <input type='text' class='view_pass form-control' id='password' name='password'>
 			// 또는 <input type='password' class='view_pass form-control' id='password' name='password'>
-			let ref = $("<input type='" + change + "' class='view_pass form-control' id='password' name='password'/>")
+			let ref = $("<input type='" + change + "' class='view_pass form-control' id='u_password' name='u_password'/>")
 			.val(input_ref.val())
 			.insertBefore(input_ref);
 			

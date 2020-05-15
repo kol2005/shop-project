@@ -160,8 +160,10 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public int re_member_join(MemberVO memberVO) {
 		
+		log.debug("암호화 하기 전 비번 : " + memberVO.getU_password());
 		String encPassword = passwordEncoder.encode(memberVO.getU_password());
 		memberVO.setU_password(encPassword);
+		log.debug("암호화 후 비번 : " + memberVO.getU_password());
 		memberVO.setEnabled(true);
 		int ret = memDao.re_update(memberVO);
 		

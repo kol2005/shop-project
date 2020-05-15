@@ -33,6 +33,7 @@
 	
 	<select id="findByUserEmail" resultType="memberVO">
  		SELECT
+ 		u_id,
  		 u_name,
  		 enabled,
  		 email,

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -118,21 +119,23 @@ public class MyPageController {
 	 *  db에서 이메일로 검색 후 비번만 초기화 하고 vo에 담아서 보내온 vo를 
 	 *  re_join.jsp로 보내기 
 	 */
+//	@ResponseBody
 	@RequestMapping(value="/re_join",method=RequestMethod.GET)
-	public String re_join(MemberVO memberVO, Model model) {
+	public String re_join(@ModelAttribute("memberVO")MemberVO memberVO, Model model) {
 		
 		MemberVO re_join = memberService.findByIdresetpass(memberVO);
 		
-		model.addAttribute("MEMBERVO",re_join);
+		model.addAttribute("memberVO",re_join);
 		
 		return "mypage/re_join";
+//		return re_join;
 	}
 	/*
 	 * ID찾기,비번 재설정 이메일 인증키 체크 완료 후 비번 재설정 메서드
 	 * re_join.jsp에서 비번 변경값 받아서 비번 변경 
 	 */
 	@RequestMapping(value="/re_join",method=RequestMethod.POST)
-	public String re_join(MemberVO memberVO, Model model,String email) {
+	public String re_join(@ModelAttribute("memberVO")MemberVO memberVO, Model model,String email) {
 			
 		int ret = memberService.re_member_join(memberVO);
 			
