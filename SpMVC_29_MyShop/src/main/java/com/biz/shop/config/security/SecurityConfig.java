@@ -1,15 +1,23 @@
 package com.biz.shop.config.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private AuthenticationProvider authProvider;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -20,11 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.antMatchers("/user/mypage").hasAnyRole("ADMIN","USER")
 		.antMatchers("/user/**").permitAll()
-		.antMatchers("/**").permitAll()
-		.anyRequest().authenticated();// 위에 나열한 것 외에는 모두 인증 필요
+		.antMatchers("/**").permitAll();
+//		.anyRequest().authenticated();// 위에 나열한 것 외에는 모두 인증 필요
 		
 		http.formLogin()
-		.loginPage("/user/login")
+		.loginProcessingUrl("/login") // security에서 지원하는 login URL
+		.loginPage("/user/login") // login form
 		.usernameParameter("username")
 		.passwordParameter("password");
 		
@@ -38,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-		super.configure(auth);
+//		super.configure(auth);
+		auth.authenticationProvider(authProvider);
 	}
 
 	/*
@@ -51,6 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		web.ignoring().antMatchers("/resources/**");
 		
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	

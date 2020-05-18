@@ -45,8 +45,8 @@ public class ServletConfig implements WebMvcConfigurer{
 		
 		MultipartResolver mr = new CommonsMultipartResolver();
 		
-		((CommonsMultipartResolver)mr).setMaxUploadSize(10000000);
-		((CommonsMultipartResolver)mr).setMaxUploadSizePerFile(5000000);
+		((CommonsMultipartResolver)mr).setMaxUploadSizePerFile(1000 * 1000 * 5);
+		((CommonsMultipartResolver)mr).setMaxUploadSize(1000 * 1000 * 20);
 		return mr;
 		
 	}
