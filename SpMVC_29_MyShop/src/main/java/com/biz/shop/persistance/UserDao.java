@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import com.biz.shop.domain.UserDetailsVO;
+import com.biz.shop.persistance.sql.UserSQL;
 
 public interface UserDao {
 
