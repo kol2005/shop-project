@@ -19,8 +19,14 @@ public interface FileUpDao {
 	@Select("SELECT * FROM tbl_profile WHERE id = #{id}")
 	public ProFileVO findById(long id);
 	
-	@Insert("INSERT INTO tbl_profile (file_p_code, file_origin_name, file_upload_name)"
-			+ " VALUES (#{file_p_code}, #{file_origin_name}, #{file_upload_name} )")
+	@Insert("INSERT INTO tbl_profile ("
+			+ " file_p_code, "
+			+ " file_origin_name, "
+			+ " file_upload_name"
+			+ " ) VALUES ("
+			+ " #{file_p_code}, "
+			+ " #{file_origin_name}, "
+			+ " #{file_upload_name} )")
 	public int insert(ProFileVO profileVO);
 	
 	@Delete("DELETE FROM tbl_profile WHERE id = #{id}")

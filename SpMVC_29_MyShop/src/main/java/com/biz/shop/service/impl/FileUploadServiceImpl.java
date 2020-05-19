@@ -15,18 +15,23 @@ public class FileUploadServiceImpl implements FileUploadService{
 	private final FileUpDao fileUpDao;
 	private final DDL_Dao ddl_dao;
 	
-	public FileUploadServiceImpl(FileUpDao fileUpDao,DDL_Dao ddl_dao) {
+	public FileUploadServiceImpl(FileUpDao fileUpDao, DDL_Dao ddl_dao) {
+		
 		this.fileUpDao = fileUpDao;
 		this.ddl_dao = ddl_dao;
 		
-		String create_fileup_table = "CREATE TABLE IF NOT EXISTS tbl_profile ("
-				+ " id bigint AUTO_INCREMENT PRIMARY KEY, "
-				+ " file_p_code VARCHAR(6), "
-				+ " file_origin_name VARCHAR(255), "
-				+ " file_upload_name VARCHAR(255) )";
+		String create_fileup_table 
+		= "CREATE TABLE IF NOT EXISTS tbl_profile ( "
+		+ " id bigint AUTO_INCREMENT PRIMARY KEY, "
+		+ " file_p_code VARCHAR(6),"
+		+ " file_origin_name VARCHAR(255),"
+		+ " file_upload_name VARCHAR(255) )";
 		
 		ddl_dao.create_table(create_fileup_table);
+		
 	}
+	
+	
 	
 	@Override
 	public List<ProFileVO> selectAll() {
@@ -63,5 +68,6 @@ public class FileUploadServiceImpl implements FileUploadService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 
 }
