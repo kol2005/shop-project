@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.persistance.DDL_Dao;
 import com.biz.shop.persistance.ProductDao;
+import com.biz.shop.persistance.sql.CreateTableSQL;
 import com.biz.shop.service.ProductService;
 
 @Service
@@ -19,35 +20,36 @@ public class ProductServiceImpl implements ProductService{
 		this.proDao = proDao;
 		this.ddl_dao = ddl_dao;
 		
-		String create_product_table = "CREATE TABLE IF NOT EXISTS tbl_product "
-				+ " ( p_code VARCHAR(6) PRIMARY KEY,"
-				+ " p_name VARCHAR(125),"
-				+ " p_bcode VARCHAR(6),"
-				+ " p_dcode VARCHAR(6),"
-				+ " p_iprice int,"
-				+ " p_oprice int,"
-				+ " p_vat boolean default true,"
-				+ " p_file VARCHAR(255) )";
-		
-		ddl_dao.create_table(create_product_table);
+		ddl_dao.create_table(CreateTableSQL.create_product_table);
+		ddl_dao.create_table(CreateTableSQL.create_pro_color_table);
+		ddl_dao.create_table(CreateTableSQL.create_pro_size_table);
+//		
+//		String create_product_table = "CREATE TABLE IF NOT EXISTS tbl_product "
+//				+ " ( p_code VARCHAR(6) PRIMARY KEY,"
+//				+ " p_name VARCHAR(125),"
+//				+ " p_bcode VARCHAR(6),"
+//				+ " p_dcode VARCHAR(6),"
+//				+ " p_iprice int,"
+//				+ " p_oprice int,"
+//				+ " p_vat boolean default true,"
+//				+ " p_file VARCHAR(255) )";
+//		
+//		ddl_dao.create_table(create_product_table);
 	}
 	
 	@Override
-	public void insert(ProductVO productVO) {
-		// TODO Auto-generated method stub
-		
+	public int insert(ProductVO productVO) {
+		return proDao.insert(productVO);
 	}
 
 	@Override
 	public List<ProductVO> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return proDao.selectAll();
 	}
 
 	@Override
-	public void findByPCode(String p_code) {
-		// TODO Auto-generated method stub
-		
+	public ProductVO findByPCode(String p_code) {
+		return proDao.findByPCode(p_code);
 	}
 
 	@Override
@@ -57,15 +59,15 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void update(ProductVO productVO) {
+	public int update(ProductVO productVO) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override
-	public void delete(String p_code) {
+	public int delete(String p_code) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 }

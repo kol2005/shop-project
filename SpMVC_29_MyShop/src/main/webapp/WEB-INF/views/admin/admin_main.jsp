@@ -6,15 +6,28 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 <style>
-#body{
-	height: 1000px;
+section.body {
+display: flex;
+}
+article{
+border: 1px solid blue;
+height: 500px;
+}
+article.menu{
+flex-basis: 300px;
 }
 </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
-<section class="container body">
-
+<section class="container-fluid body p-2">
+	<article class="container menu m-2">
+		<%@ include file="/WEB-INF/views/admin/admin_nav.jspf" %>
+	
+	</article>
+	<article class="container fluid content m-2">
+	
+	</article>
 </section>
 </body>
 </html>

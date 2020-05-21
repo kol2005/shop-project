@@ -30,7 +30,8 @@ display: flex;
 	top: 0;
 	width: 100%;
 	display: flex;
-	transition: top 0.3s; 
+	transition: top 0.3s;
+	margin-bottom: 50px;
 }
 #navbar a {
 	flex: 0 1 auto;
@@ -58,6 +59,17 @@ form#logout{
 #logout a:nth-child(1) {
 	margin-left: auto;
 }
+
+/*
+position: relative
+컨테이너 박스들 안겹치게 해주는 것
+*/
+section.body {
+	position: relative;
+	top:60px;
+
+}
+
 </style>
 
 <script>
@@ -91,11 +103,10 @@ $(function(){
 
 </script>
 
-<nav id="navbar">
+<nav id="navbar" class="">
 	<div class="nav-menu">
 		<a href="${rootPath}/">HOME</a>
-		<a href="#">ㅁㅇ</a>
-		<a href="#">asd</a>
+		<a href="#">SPRING SHOP</a>
 	</div>
 	
 	<div class="nav-login-menu">
