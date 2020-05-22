@@ -34,14 +34,22 @@ public class ServletConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/images/**")
 		.addResourceLocations("/images/");
 		
+		registry.addResourceHandler("/upload/**")
+		.addResourceLocations("file:///bizwork/upload/");
+		
 		WebMvcConfigurer.super.addResourceHandlers(registry);
+	}
+	
+	@Bean(name="filePath")
+	public String filePath() {
+		return "c:/bizwork/upload";
 	}
 	
 	/*
 	 * fileUpload를 하기 위한 설정
 	 */
 	@Bean
-	public MultipartResolver multiResolver() {
+	public MultipartResolver multipartResolver() {
 		
 		MultipartResolver mr = new CommonsMultipartResolver();
 		

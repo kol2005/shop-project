@@ -66,36 +66,6 @@ $(function(){
 		
 	})
 	
-	// ajax로 파일업로드 하기
-	$("#ajax_up").click(function(){
-		let formData = new FormData()
-		let file = $("#file")[0].files[0]
-		formData.append("file",file)
-		
-		$.ajax({
-			url : "${rootPath}/file/upload",
-			method : "POST",
-			data : formData,
-			processData : false,
-			contentType : false,
-			// * 중요한 부분
-			beforeSend : function(ax){
-				ax.setRequestHeader("${_csrf.headerName}","${_csrf.token}")
-			},
-			// *
-			success : function(result){
-				alert(result)
-			},
-			error : function(){
-				alert("서버 통신오류")
-			}
-			
-			
-			
-		})
-		
-	})
-	
 })
 </script>
 </head>
@@ -121,7 +91,6 @@ $(function(){
 			</div>
 			<div class="form-group">
 				<input type="file" id="file" name="file">
-				<button type="button" id="ajax_up">ajax 파일업</button>
 			</div>
 			<div class="button-group text-right">
 				<button type="button" class="btn btn-primary save">저장</button>

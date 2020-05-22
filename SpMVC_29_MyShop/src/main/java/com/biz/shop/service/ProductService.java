@@ -2,6 +2,8 @@ package com.biz.shop.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.biz.shop.domain.ProductVO;
 
 /*
@@ -16,5 +18,6 @@ public interface ProductService {
 	
 	public int update(ProductVO productVO);
 	public int delete(String p_code);
+	public int insert(ProductVO productVO, MultipartFile file);
 
 }
