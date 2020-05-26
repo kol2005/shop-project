@@ -1,0 +1,139 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+<style>
+*{
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+body{
+	width: 100%;
+	display: flex;
+	margin: 0 auto;
+}
+.nav-menu{
+display: flex;
+}
+.nav-login-menu{
+	margin-left: auto;
+		display: inline-flex;
+}
+
+#navbar{
+	background-color: #333;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	display: flex;
+	transition: top 0.3s;
+	margin-bottom: 50px;
+}
+#navbar a {
+	flex: 0 1 auto;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 1rem;
+	text-decoration: none;
+	font-size: 1.2rem;
+}
+#navbar a:hover{
+	background-color: #ddd;
+	color: black;
+}
+form#logout{
+	display: inline-flex;
+	margin-left: auto;
+	margin:0 auto;
+	text-align: right;
+}
+
+#navbar a:nth-child(4) {
+	margin-left: auto;
+}
+#logout a:nth-child(1) {
+	margin-left: auto;
+}
+
+/*
+position: relative
+컨테이너 박스들 안겹치게 해주는 것
+*/
+section.body {
+	position: relative;
+	top:60px;
+
+}
+
+</style>
+
+<script>
+$(function(){
+
+	var preScrollpos = $(window).scrollTop()
+	$(window).scroll(function(){
+		
+		let currentScrollpos = $(window).scrollTop()
+		if(preScrollpos > currentScrollpos){
+			$("#navbar").css("top",0)
+		}else{
+			$("#navbar").css("top","-60px")
+		}
+		preScrollpos = currentScrollpos
+	})
+	
+	$(document).on("click","a.logout",function(){
+		if(confirm("로그아웃 할까요?")){
+			$.post("${rootPath}/logout",
+				{ ${_csrf.parameterName}:"${_csrf.token}"},
+				function(result){
+					document.location.replace("${rootPath}/")
+				
+				}
+			)
+		}
+	})
+	
+})
+
+</script>
+
+<nav id="navbar" class="">
+	<div class="nav-menu">
+		<a href="${rootPath}/">HOME</a>
+		<a href="#">SPRING SHOP</a>
+	</div>
+	
+	<div class="nav-login-menu">
+	<sec:authorize access="isAnonymous()">
+		<a href="${rootPath}/user/login">로그인</a>
+	</sec:authorize>
+	
+	<sec:authorize access="isAuthenticated()">
+		<form:form action="${rootPath}/logout" id="logout">
+		<a href="javascript:void(0)" class="logout">로그아웃</a>
+		<a href="${rootPath}/user/mypage">MY PAGE</a>
+		</form:form>
+	</sec:authorize>
+	
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a href="${rootPath}/admin">관리자 홈</a>
+	</sec:authorize>
+	</div>
+
+</nav>
+
+
+
+
+
+
+
+
+
+
