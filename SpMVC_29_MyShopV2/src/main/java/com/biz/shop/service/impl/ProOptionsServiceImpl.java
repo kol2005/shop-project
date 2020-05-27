@@ -3,6 +3,7 @@ package com.biz.shop.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.shop.domain.ProColorVO;
 import com.biz.shop.domain.ProOptionsVO;
@@ -12,6 +13,7 @@ import com.biz.shop.persistance.ProOptionsDao;
 import com.biz.shop.persistance.sql.CreateTableSQL;
 import com.biz.shop.service.ProOptionsService;
 
+@Transactional
 @Service
 public class ProOptionsServiceImpl implements ProOptionsService{
 

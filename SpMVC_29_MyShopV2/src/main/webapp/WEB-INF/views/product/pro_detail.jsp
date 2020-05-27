@@ -66,7 +66,11 @@ $(function(){
 			if(result == "EXISTS") {
 				alert("이미 등록된 사이즈 정보입니다")
 			} else {
-				$("#p_size_list").append($("<option/>",{value:size_standard,text:size_name}))
+				$("#p_size_list").append(
+						$("<option/>",{
+							value:result.s_size,
+							text:size_name,
+							'data-id' : result.s_seq}))
 			}
 		})
 		
@@ -75,10 +79,12 @@ $(function(){
 	// 리스트 박스에 들어있는 것들 중 클릭되있는 것 삭제
 	$("button.size-delete").click(function(){
 		
+		let seq = $("#p_size_list option:selected").data("id")
+		
 		$.ajax({
 			url : '${rootPath}/product/delete_size',
 			method : 'POST',
-			data : {p_code:'${productVO.p_code}', s_size : size_standard},
+			data : {s_seq:seq},
 				beforeSend : function(ax) {
 					ax.setRequestHeader("${_csrf.headerName}","${_csrf.token}")
 				},
@@ -130,7 +136,9 @@ $(function(){
 						<button type="button" class="btn btn-primary size-add">▼ 추가</button>
 						<button type="button" class="btn btn-warning size-delete">▲ 삭제</button>
 						<form:select path="p_size_list" class="form-control">
-							<form:options items="${productVO.p_size_list}" itemLabel="s_size" itemValue="s_size"/>
+							<c:forEach items="${productVO.p_size_list}" var="vo">
+								<form:option value="${vo.s_size}" data-id="${vo.s_seq}">${vo.o_name}</form:option>
+							</c:forEach>
 						</form:select>
 					</div>
 					<div class="p_detail_white">
