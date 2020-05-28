@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.biz.shop.domain.ProColorVO;
 import com.biz.shop.domain.ProSizeVO;
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProOptionsService;
@@ -115,6 +116,29 @@ public class ProductController {
 	public String delete_size(ProSizeVO proSizeVO) {
 		int ret = proOPTService.delete_size(proSizeVO);
 		return "OK";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insert_color",method=RequestMethod.POST)
+	public Object insert_color(ProColorVO proColorVO) {
+		log.debug("C_color : " + proColorVO.getC_color());
+		log.debug("S_SEQ : " + proColorVO.getSize_seq());
+		
+		return proOPTService.insert_color(proColorVO);
+		
+//		return proColorVO;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/get_color_list_by_size",method=RequestMethod.GET)
+	public Object get_color_list_by_size(String s_seq) {
+		List<ProColorVO> proColorList = proOPTService.getColorListBySize(s_seq);
+		
+		if(proColorList == null) {
+			return "FAIL";
+		}
+		
+		return proColorList;
 	}
 	
 	public String update(long id) {
