@@ -109,12 +109,14 @@ public class MyPageController {
 	// 마이페이지에서 비밀번호 변경 페이지
 	@Secured(value = {"ROLE_ADMIN","ROLE_USER"})
 	@RequestMapping(value = "/changepassword",method=RequestMethod.GET)
-	public String changePassword() {
+	public String changePassword(Model model) {
 		MemberVO memberVO=(MemberVO) SecurityContextHolder
 				.getContext()
 				.getAuthentication()
 				.getPrincipal();
 		if(memberVO==null ) return null;
+		
+		model.addAttribute("memberVO",memberVO);
 		
 		// 비밀번호만 변경 입력받는 form jsp
 		return "mypage/repassword";
