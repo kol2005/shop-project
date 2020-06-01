@@ -246,16 +246,20 @@ public class MemberServiceImp implements MemberService {
 
 		boolean bKey = PbeEncryptor.getDecrypt(secret_key).equals(secret_value);
 
-		log.debug("인증키  key : ", secret_key);
-		log.debug("인증키 value : ", secret_value);
+		String decrypt_seckey = PbeEncryptor.getDecrypt(secret_key);
+		
+		log.debug("인증키  key : " + secret_key);
+		log.debug("인증키 디크립트 key : " + decrypt_seckey);
+		log.debug("인증키 value : " + secret_value);
 
 		if (bKey) {
 			log.debug("이메일  : " + email);
 
 			MemberVO memberVO = memDao.findByUserEmail(email);
 
-			memberVO.setEnabled(true);
-			update(memberVO);
+			//memberVO.setEnabled(true);
+//			update(memberVO);
+			//memDao.update(memberVO);
 		}
 
 		return bKey;

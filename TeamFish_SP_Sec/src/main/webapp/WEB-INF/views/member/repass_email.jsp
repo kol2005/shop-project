@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<c:set var="rootPath" value="${pageContext.request.contextPath }"/>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +58,7 @@ $(function() {
 <h2>Email 인증</h2>
 <div>ID찾기/비밀번호를 변경하려면 E-mail 인증을 완료해야 합니다</div>
 <p>
-<form:form action="${rootPath }/member/findID" method="post" modelAttribute="memberVO" class="form-group">
+<form:form action="${rootPath}/member/findID" method="post" modelAttribute="memberVO" class="form-group">
 	<div class="form-group">
 	<form:input path="email" type="email" placeholder="email"/>
 	</div>
