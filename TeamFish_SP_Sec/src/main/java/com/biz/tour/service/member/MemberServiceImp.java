@@ -246,28 +246,29 @@ public class MemberServiceImp implements MemberService {
 
 		boolean bKey = PbeEncryptor.getDecrypt(secret_key).equals(secret_value);
 
-		String decrypt_seckey = PbeEncryptor.getDecrypt(secret_key);
-		
-		log.debug("인증키  key : " + secret_key);
-		log.debug("인증키 디크립트 key : " + decrypt_seckey);
-		log.debug("인증키 value : " + secret_value);
+//		String decrypt_seckey = PbeEncryptor.getDecrypt(secret_key);
+//		
+//		log.debug("인증키  key : " + secret_key);
+//		log.debug("인증키 디크립트 key : " + decrypt_seckey);
+//		log.debug("인증키 value : " + secret_value);
 
-		if (bKey) {
-			log.debug("이메일  : " + email);
-
-			MemberVO memberVO = memDao.findByUserEmail(email);
-
-			//memberVO.setEnabled(true);
+//		if (bKey) {
+//			log.debug("이메일  : " + email);
+//
+//			MemberVO memberVO = memDao.findByUserEmail(email);
+//
+//			memberVO.setEnabled(true);
 //			update(memberVO);
-			//memDao.update(memberVO);
-		}
+//			memDao.update(memberVO);
+//		}
 
 		return bKey;
 	}
 
 	/*
-	 * ID찾기,비번 재설정에서 이메일 인증을 완료하고 id와 비번재설정을 위한 메서드 email로 db를 검색해서 vo에 담은 다음 비번은 널로
-	 * 재설정 후 리턴
+	 * ID찾기,비번 재설정에서 이메일 인증을 완료하고
+	 * id와 비번재설정을 위한 메서드 email로 db를
+	 * 검색해서 vo에 담은 다음 비번은 널로 재설정 후 리턴
 	 */
 	@Override
 	public MemberVO findByIdresetpass(MemberVO memberVO) {
