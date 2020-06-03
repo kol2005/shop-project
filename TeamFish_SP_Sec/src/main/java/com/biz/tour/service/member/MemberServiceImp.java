@@ -284,12 +284,16 @@ public class MemberServiceImp implements MemberService {
 	public int re_member_join(MemberVO memberVO) {
 
 		log.debug("암호화 하기 전 비번 : " + memberVO.getPassword());
+		// 변경할 비밀번호를 암호화 해서 encPassword에 셋팅
 		String encPassword = passwordEncoder.encode(memberVO.getPassword());
+		// memberVO에 암호화한 encPassword를 셋팅
 		memberVO.setPassword(encPassword);
 		log.debug("암호화 후 비번 : " + memberVO.getPassword());
+		// memberVO enabled를 true로 변경 후 셋팅(혹시 false이거나 할 경우를 위해 이부분은 확인 필요)
 		memberVO.setEnabled(true);
+		// memDao 에 업데이트 후 
 		int ret = memDao.re_update(memberVO);
-
+		// 컨트롤러로 리턴
 		return ret;
 	}
 
