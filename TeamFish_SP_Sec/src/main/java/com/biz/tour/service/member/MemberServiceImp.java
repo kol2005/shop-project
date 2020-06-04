@@ -252,17 +252,19 @@ public class MemberServiceImp implements MemberService {
 //		log.debug("인증키 디크립트 key : " + decrypt_seckey);
 //		log.debug("인증키 value : " + secret_value);
 
-//		if (bKey) {
-//			log.debug("이메일  : " + email);
-//
-//			MemberVO memberVO = memDao.findByUserEmail(email);
-//
-//			memberVO.setEnabled(true);
-//			update(memberVO);
-//			memDao.update(memberVO);
-//		}
+		if (bKey) {
+			log.debug("이메일  : " + email);
 
-		return bKey;
+			MemberVO memberVO = memDao.findByUserEmail(email);
+
+			memberVO.setEnabled(true);
+//			update(memberVO);
+			memDao.update(memberVO);
+			return bKey;
+		}
+
+//		return bKey;
+		return false;
 	}
 
 	/*

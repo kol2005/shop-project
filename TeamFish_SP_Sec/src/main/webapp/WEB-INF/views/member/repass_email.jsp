@@ -41,8 +41,14 @@ $(function() {
 				secret_value:secret_value
 			},
 			success:function(result){
+			/* 6월4일 버그 수정 if 랑 else 추가
+			이거 없으면 인증코드 잘못 입력해도 FAIL 리턴되긴 하는데 비번 변경 페이지로 넘어가짐 */
+				if(result=="OK"){
 				alert(result)
 				document.location.replace("${rootPath}/member/re_join")
+				} else {
+				alert(result+"\n"+"인증코드를 잘못 입력하였습니다")
+				}
 			},
 			error:function(){
 				alert("서버통신오류")
