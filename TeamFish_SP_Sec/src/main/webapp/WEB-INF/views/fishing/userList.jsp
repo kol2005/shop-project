@@ -101,15 +101,14 @@
 </script>
 
 <body>
-	<p>mode:${MODE }</p>
 	<h4 class="userListTitle">User Fishing Spot</h4>
 	<br />
 	<section class="userSearch">
-		<form method="get">
+		<form method="get" class="form-group">
 			<label for="searchOption">검색</label> <select name="searchOption">
 				<option value="titleSearch">제목으로 검색</option>
-			</select> <input name="inputStr">
-			<button type="button" id="userSearch">검색</button>
+			</select> <input name="inputStr" placeholder="검색할 단어를 입력하세요">
+			<button type="button" id="userSearch" class="btn btn-outline-success">검색</button>
 		</form>
 		<br />
 
@@ -119,8 +118,16 @@
 			<div class="container col-sm-3">
 				<h2>${vo.uf_title}</h2>
 				<div class="card" style="width: 400px">
-					<img class="card-img-top" src="${rootPath }/files/${vo.mainPic }"
+					<c:choose>
+						<c:when test="${vo.mainPic!=null }">
+							<img class="card-img-top" src="${rootPath }/files/${vo.mainPic }"
 						alt="Card image" style="width: 100%">
+						</c:when>
+						<c:otherwise>
+							<img class="card-img-top" src="${rootPath }/images/defaultfish.jpg"
+						alt="Card image" style="width: 80%">
+						</c:otherwise>
+					</c:choose>
 					<div class="card-body">
 						<h4 class="card-uf_title">${vo.uf_title }</h4>
 						<a id="detail" data-id="${vo.uf_id }" href="javascript:void(0)"
@@ -134,12 +141,12 @@
 	<section>
 	<c:if test="${MODE=='water' }">
 	<a href="${rootPath }/fishUserWater/waterInsert">
-	<button>insert new water fishing spot</button>
+	<button class="btn btn-outline-primary">insert new water fishing spot</button>
 	</a>
 	</c:if>
 	<c:if test="${MODE=='sea' }">
 	<a href="${rootPath }/fishUserSea/seaInsert">
-	<button>insert new sea fishing spot</button>
+	<button class="btn btn-outline-primary">insert new sea fishing spot</button>
 	</a>
 	</c:if>
 	</section>
